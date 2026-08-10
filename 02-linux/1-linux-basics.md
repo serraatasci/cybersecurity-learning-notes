@@ -1,80 +1,303 @@
 # Linux Basics
 
-## Before Removing Wi-Fi Adapter
+This page contains my notes on basic Linux command-line usage and shell fundamentals.
 
-Before removing the external Wi-Fi adapter, the wireless interface should be stopped and the NetworkManager service can be restarted.
+---
 
-Commands:
-- airmon-ng stop <interface>
-- ip link set <interface> down
-- systemctl restart NetworkManager
+## Navigation Commands
 
-Replace <interface> with the correct wireless interface name such as wlan0 or wlan1.
+### `pwd` — Print Working Directory
 
-## Keyboard Layout
+Shows the full path of the directory I am currently in.
 
-setxkbmap tr = Changes the keyboard layout to Turkish.
+Example:
 
-## Basic Linux Commands
+`pwd`
 
-pwd = Prints the current working directory.
+Output example:
 
-ls = Lists files and directories in the current directory.
+`/home/ubuntu/Documents`
 
-cd <directory-name> = Changes the current directory.
+---
 
-cd .. = Moves one directory back.
+### `ls` — List Directory Contents
 
-mkdir <directory-name> = Creates a new directory.
+Lists files and directories in the current location.
 
-clear = Clears the terminal screen.
+Basic usage:
 
-touch notes.txt = Creates a new empty file.
+`ls`
 
-cp notes.txt test/notes.txt = Copies a file from one location to another.
+Useful options:
 
-mv notes.txt test/notes.txt = Moves or renames a file.
+`ls -a`
 
-rm notes.txt = Removes a file.
+Shows hidden files.
 
-rm -r <directory-name> = Removes a directory and its contents.
+`ls -l`
 
-Note: Commands such as rm -rf should be used very carefully because they can permanently delete files.
+Shows detailed information such as permissions, owner, group, size, and modification time.
 
-## User Privileges
+`ls -lh`
 
-sudo su = Switches to the superuser/root account.
+Displays file sizes in a more human-readable format.
 
-exit = Exits from the current user session and returns to the previous user.
+---
 
-## Reading and Editing Files
+### `cd` — Change Directory
 
-cat notes.txt = Displays the content of a file.
+Moves between directories.
 
-nano notes.txt = Opens a file in the Nano text editor.
+Example:
 
-## File Information and Permissions
+`cd Documents`
 
-ls -la = Shows detailed information about files and directories.
+Go back one directory:
 
-Example output includes:
-- File type and permissions
-- Number of links
-- Owner
-- Group
-- File size
-- Last modification time
-- File or directory name
+`cd ..`
 
-Permission types:
-- r = read
-- w = write
-- x = execute
+Go directly to a specific path:
 
-## Network Information
+`cd /home/ubuntu/Documents`
 
-ifconfig = Shows local IP and network interface information.
+---
 
-## Password Management
+## Viewing Files
 
-passwd = Changes the user password.
+### `cat`
+
+Displays the contents of a file.
+
+Example:
+
+`cat notes.txt`
+
+A full path can also be used:
+
+`cat /home/ubuntu/Documents/notes.txt`
+
+---
+
+## Creating Files and Directories
+
+### `touch`
+
+Creates an empty file.
+
+Example:
+
+`touch notes.txt`
+
+### `mkdir`
+
+Creates a new directory.
+
+Example:
+
+`mkdir projects`
+
+---
+
+## Copying and Moving
+
+### `cp` — Copy
+
+Copies a file.
+
+Example:
+
+`cp notes.txt notes-copy.txt`
+
+Copy a file to another directory:
+
+`cp notes.txt Documents/`
+
+---
+
+### `mv` — Move / Rename
+
+Moves a file:
+
+`mv notes.txt Documents/`
+
+It can also rename files:
+
+`mv notes.txt new-notes.txt`
+
+---
+
+## Removing Files and Directories
+
+### `rm`
+
+Removes a file.
+
+Example:
+
+`rm notes.txt`
+
+Remove a directory recursively:
+
+`rm -R directory`
+
+`rm` should be used carefully because deleted files are not normally moved to a recycle bin.
+
+---
+
+## Identifying File Types
+
+### `file`
+
+Determines the actual type of a file.
+
+Example:
+
+`file notes.txt`
+
+Example output:
+
+`notes.txt: ASCII text`
+
+This is useful because file extensions are not always reliable.
+
+---
+
+## Clearing the Terminal
+
+`clear`
+
+Clears the terminal screen.
+
+---
+
+# Command Options and Help
+
+Linux commands often support options or flags.
+
+Example:
+
+`ls -a`
+
+Here:
+
+- `ls` = command
+- `-a` = option
+
+Many commands provide built-in help:
+
+`ls --help`
+
+For more detailed documentation, Linux provides manual pages.
+
+`man ls`
+
+To exit a manual page:
+
+`q`
+
+---
+
+# Shell Operators
+
+## `&` — Run in Background
+
+Runs a command in the background so the terminal can still be used.
+
+General structure:
+
+`command &`
+
+---
+
+## `&&` — Run the Next Command if the First Succeeds
+
+General structure:
+
+`command1 && command2`
+
+`command2` only runs if `command1` completes successfully.
+
+---
+
+## `>` — Redirect Output
+
+Sends command output into a file.
+
+Example:
+
+`echo hello > welcome.txt`
+
+If the file already exists, its previous contents are overwritten.
+
+---
+
+## `>>` — Append Output
+
+Adds output to the end of a file without deleting existing content.
+
+Example:
+
+`echo world >> welcome.txt`
+
+---
+
+## `|` — Pipe
+
+Sends the output of one command to another command.
+
+General structure:
+
+`command1 | command2`
+
+This is useful for chaining tools together.
+
+---
+
+# Terminal Text Editors
+
+## Nano
+
+Open or create a file:
+
+`nano notes.txt`
+
+Useful shortcuts:
+
+- `Ctrl + O` → Save
+- `Ctrl + X` → Exit
+- `Ctrl + W` → Search
+
+---
+
+## Vim
+
+Vim is a more advanced terminal text editor.
+
+It supports features such as:
+
+- Syntax highlighting
+- Advanced navigation
+- Custom keyboard shortcuts
+- Powerful text editing
+
+For beginner-level Linux work, Nano is generally easier to use.
+
+---
+
+# Quick Reference
+
+| Command | Purpose |
+|---|---|
+| `pwd` | Show current directory |
+| `ls` | List files and directories |
+| `cd` | Change directory |
+| `cat` | Display file contents |
+| `touch` | Create an empty file |
+| `mkdir` | Create a directory |
+| `cp` | Copy files |
+| `mv` | Move or rename files |
+| `rm` | Remove files |
+| `file` | Identify file type |
+| `clear` | Clear terminal |
+| `man` | Open a manual page |
+| `nano` | Edit text files |
